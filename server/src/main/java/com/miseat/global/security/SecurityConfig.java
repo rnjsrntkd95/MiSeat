@@ -6,6 +6,7 @@ import com.miseat.global.security.filter.CustomAuthenticationEntryPoint;
 import com.miseat.global.security.filter.JwtAuthenticationFilter;
 import com.miseat.global.security.jwt.provider.JwtAuthenticationProvider;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
@@ -37,7 +38,9 @@ public class SecurityConfig {
                 .logout().disable()
                 .csrf().disable()
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .headers(header -> header.frameOptions().sameOrigin())
                 .authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers(PathRequest.toH2Console()).permitAll()
                         .requestMatchers("/test").permitAll() // test controller
                 )
                 .addFilterBefore(createJwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
