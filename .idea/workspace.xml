@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="1b26fad0-4800-4ef7-907a-1abe6105783c" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/server/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/build.gradle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/gradle/wrapper/gradle-wrapper.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/gradlew" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/gradlew.bat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/settings.gradle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/java/com/miseat/MiSeatApplication.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/java/com/miseat/domain/application/controller/ApplicationController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/java/com/miseat/domain/test/TestController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/java/com/miseat/global/advice/ExceptionAdvice.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/java/com/miseat/global/exception/BusinessException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/java/com/miseat/global/exception/ErrorRs.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/java/com/miseat/global/exception/FailedAuthenticationException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/java/com/miseat/global/exception/jwt/NotFoundJwtException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/java/com/miseat/global/profile/AppProfiles.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/java/com/miseat/global/property/JwtProperty.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/java/com/miseat/global/property/PropertyConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/java/com/miseat/global/security/CustomUser.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/java/com/miseat/global/security/SecurityConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/java/com/miseat/global/security/filter/CustomAccessDeniedHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/java/com/miseat/global/security/filter/CustomAuthenticationEntryPoint.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/java/com/miseat/global/security/filter/JwtAuthenticationFilter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/java/com/miseat/global/security/jwt/JwtClaimKey.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/java/com/miseat/global/security/jwt/JwtExceptionCode.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/java/com/miseat/global/security/jwt/UserContext.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/java/com/miseat/global/security/jwt/provider/JwtAuthenticationProvider.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/java/com/miseat/global/security/jwt/provider/JwtTokenProvider.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/java/com/miseat/global/swagger/SwaggerApiInfo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/java/com/miseat/global/swagger/SwaggerConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/java/com/miseat/global/swagger/SwaggerConfigConstants.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/java/com/miseat/global/util/DateUtils.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/java/com/miseat/global/util/JsonUtils.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/resources/application-kr-development.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/resources/application-kr-production.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/resources/application-kr-staging.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/resources/application-local.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/resources/application.yml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2L5bPTkbCPfCjumNioTdx8kgcRv" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="autoscrollFromSource" value="true" />
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;configurable.group.appearance&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\dev\MiSeat\server" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="MiSeatApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <option name="ACTIVE_PROFILES" value="local" />
+      <option name="ALTERNATIVE_JRE_PATH" value="corretto-17" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+      <module name="MiSeat" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.miseat.MiSeatApplication" />
+      <extension name="software.aws.toolkits.jetbrains.core.execution.JavaAwsConnectionExtension">
+        <option name="credential" />
+        <option name="region" />
+        <option name="useCurrentConnection" value="false" />
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="1b26fad0-4800-4ef7-907a-1abe6105783c" name="Changes" comment="" />
+      <created>1675163866615</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1675163866615</updated>
+      <workItem from="1675163868871" duration="439000" />
+      <workItem from="1675164315553" duration="76000" />
+      <workItem from="1675164406028" duration="390000" />
+      <workItem from="1675164804712" duration="308000" />
+      <workItem from="1675165119816" duration="93000" />
+      <workItem from="1675165222806" duration="125000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
