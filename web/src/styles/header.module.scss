@@ -1,0 +1,27 @@
+@import '@styles/mixins.scss';
+
+.header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding:0 20px;
+  height: $HEADER_HEIGHT;
+  background-color: $C_Blue;
+}
+
+.login_Wrap {
+  .login {
+    display: flex;
+    align-items: center;
+    font-size: $Fw_Md;
+    font-weight: $Fw_Md;
+
+    &:before {
+      width: 30px;
+      height: 30px;
+      background-size: cover;
+      content: '';
+    }
+  }
+}
