@@ -3,6 +3,9 @@ const nextConfig = {
   experimental: {
     appDir: true,
   },
-}
+  env: {
+    DOMAIN: 'http://10.111.3.121:8080/ws-miseat',
+  },
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;
