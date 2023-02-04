@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import styles from '@styles/header.module.scss';
+import styles from '@components/header/header.module.scss';
 
 const Header = () => {
   return (
