@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 import RCalendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
-import '@components/calendar/calendarCustom.css';
+import '@components/calendar/calendarCustom.scss';
 import styles from '@components/calendar/calendar.module.scss';
 
 const Calendar = () => {

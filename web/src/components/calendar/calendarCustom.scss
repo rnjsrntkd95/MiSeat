@@ -57,10 +57,11 @@ abbr[title] {
   font-weight: bold;
   color: white;
 }
+
 .react-calendar__tile--active:enabled:hover,
 .react-calendar__tile--active:enabled:focus {
-  background: #6f48eb;
   color: white;
+  background: #6f48eb;
 }
 .react-calendar--selectRange .react-calendar__tile--hover {
   background-color: #f8f8fa;
