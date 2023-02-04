@@ -15,11 +15,4 @@
   align-items: center;
   font-size: $Fw_Md;
   font-weight: $Fw_Md;
-
-  &:before {
-    width: 30px;
-    height: 30px;
-    background-size: cover;
-    content: '';
-  }
 }
