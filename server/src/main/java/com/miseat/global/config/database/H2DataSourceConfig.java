@@ -1,4 +1,4 @@
-package com.miseat.global.database;
+package com.miseat.global.config.database;
 
 import com.miseat.global.profile.AppProfiles;
 import com.zaxxer.hikari.HikariDataSource;

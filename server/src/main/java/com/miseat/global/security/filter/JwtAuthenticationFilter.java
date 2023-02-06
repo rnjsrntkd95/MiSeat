@@ -1,6 +1,5 @@
 package com.miseat.global.security.filter;
 
-import com.miseat.global.exception.jwt.NotFoundJwtException;
 import com.miseat.global.security.jwt.JwtExceptionCode;
 import com.miseat.global.security.jwt.provider.JwtAuthenticationProvider;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -17,21 +16,15 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
-import java.util.Optional;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 @Slf4j
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
-    private static final String BEARER_TOKEN_REGEX = "Bearer (.*)";
     public static final String JWT_EXCEPTION = "exception";
-    private static final int GROUP_FIRST = 1;
 
     private final JwtAuthenticationProvider jwtAuthenticationProvider;
 
@@ -56,24 +49,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     }
 
     private void authenticate(String authorization) {
-        String accessToken = Optional
-                .ofNullable(authorization)
-                .map(this::getAccessToken)
-                .orElse(null);
-
-        if (StringUtils.isNotBlank(accessToken)) {
-            Authentication auth = jwtAuthenticationProvider.authenticate(accessToken);
-            SecurityContextHolder.getContext().setAuthentication(auth);
+        if (StringUtils.isBlank(authorization)) {
+            return;
         }
-    }
-
-    private String getAccessToken(String bearerToken) {
-        Pattern pattern = Pattern.compile(BEARER_TOKEN_REGEX);
-        Matcher matcher = pattern.matcher(bearerToken);
-
-        if (matcher.find()) {
-            return matcher.group(GROUP_FIRST);
-        }
-        throw new NotFoundJwtException();
+        Authentication auth = jwtAuthenticationProvider.authenticate(authorization);
+        SecurityContextHolder.getContext().setAuthentication(auth);
     }
 }

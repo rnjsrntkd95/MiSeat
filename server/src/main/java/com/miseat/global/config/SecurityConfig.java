@@ -1,4 +1,4 @@
-package com.miseat.global.security;
+package com.miseat.global.config;
 
 import com.miseat.global.profile.AppProfiles;
 import com.miseat.global.security.filter.CustomAccessDeniedHandler;
@@ -39,9 +39,13 @@ public class SecurityConfig {
                 .formLogin().disable()
                 .logout().disable()
                 .csrf().disable()
+                .cors().and()
+                .headers(headers -> headers.frameOptions().sameOrigin())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/test").permitAll() // test controller
+                        .requestMatchers("/ws-miseat/**").permitAll()
+                        .requestMatchers("/**").permitAll()
                 )
                 .addFilterBefore(createJwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling()

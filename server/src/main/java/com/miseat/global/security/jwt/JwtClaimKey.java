@@ -6,6 +6,7 @@ import lombok.Getter;
 public enum JwtClaimKey {
 
     USERNAME("username"),
+    TEAM_CODE("teamCode"),
     ;
 
     private final String keyName;

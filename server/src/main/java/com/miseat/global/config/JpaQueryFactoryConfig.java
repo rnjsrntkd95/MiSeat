@@ -1,4 +1,4 @@
-package com.miseat.global.querydsl;
+package com.miseat.global.config;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;

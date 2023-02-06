@@ -12,9 +12,11 @@ spring:
     properties:
       hibernate:
         format_sql: true
+    generate-ddl: true
   h2:
     console:
       enabled: true
+
 logging:
   level:
     org:
