@@ -32,12 +32,12 @@ public class ClientToServerMessageHandler implements ChannelInterceptor {
         StompHeaderAccessor accessor = MessageHeaderAccessor.getAccessor(message, StompHeaderAccessor.class);
 
         if (Objects.nonNull(accessor)) {
-            executeExtraCommand(accessor);
+            executeExtraAction(accessor);
         }
         return message;
     }
 
-    private void executeExtraCommand(@NotNull StompHeaderAccessor accessor) {
+    private void executeExtraAction(@NotNull StompHeaderAccessor accessor) {
         StompCommand command = accessor.getCommand();
         String sessionId = accessor.getSessionId();
 

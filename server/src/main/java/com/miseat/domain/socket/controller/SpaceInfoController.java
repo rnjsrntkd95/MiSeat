@@ -7,7 +7,8 @@ import com.miseat.global.security.jwt.WorkerContext;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.handler.annotation.Header;
-import org.springframework.messaging.simp.annotation.SubscribeMapping;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.simp.annotation.SendToUser;
 import org.springframework.web.bind.annotation.RestController;
 
 import static org.springframework.messaging.simp.SimpMessageHeaderAccessor.USER_HEADER;
@@ -18,8 +19,9 @@ public class SpaceInfoController {
 
     private final SpaceInfoService spaceInfoService;
 
-    @Operation(description = "[SUBSCRIBE] 스페이스 예약 정보 조회")
-    @SubscribeMapping(WebSocketPath.TEAM)
+    @Operation(description = "[SEND] 스페이스 예약 정보 조회")
+    @MessageMapping(WebSocketPath.TEAM)
+    @SendToUser(WebSocketPath.USER_TOPIC_TEAM)
     public FindSpaceWithReservationRs findSpaceWithReservation(@Header(USER_HEADER) WorkerContext context) {
         return spaceInfoService.findSpaceWithReservation(context.getTeamCode());
     }

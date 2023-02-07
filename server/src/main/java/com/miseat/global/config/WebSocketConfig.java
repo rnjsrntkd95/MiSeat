@@ -1,5 +1,6 @@
 package com.miseat.global.config;
 
+import com.miseat.global.path.WebSocketPath;
 import com.miseat.global.websocket.handler.ClientToServerMessageHandler;
 import com.miseat.global.websocket.handler.ServerToClientMessageHandler;
 import lombok.RequiredArgsConstructor;
@@ -20,15 +21,16 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint("/ws-miseat")
+        registry.addEndpoint(WebSocketPath.WS_MISEAT)
                 .setAllowedOriginPatterns("*")
                 .withSockJS();
     }
 
     @Override
     public void configureMessageBroker(MessageBrokerRegistry config) {
-        config.setApplicationDestinationPrefixes("/pub");
-        config.enableSimpleBroker("/sub", "/dm");
+        config.setApplicationDestinationPrefixes(WebSocketPath.APP);
+        config.enableSimpleBroker(WebSocketPath.TOPIC, WebSocketPath.QUEUE);
+        config.setUserDestinationPrefix(WebSocketPath.WORKER);
     }
 
     @Override

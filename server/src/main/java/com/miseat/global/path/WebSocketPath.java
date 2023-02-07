@@ -2,10 +2,20 @@ package com.miseat.global.path;
 
 
 public class WebSocketPath {
+    // Root Path
+    public static final String WS_MISEAT = "/ws-miseat";
+    public static final String APP = "/app";
+    public static final String TOPIC = "/topic";
+    public static final String QUEUE = "/queue";
+    public static final String WORKER = "/worker";
 
-    // SUBSCRIBE
+    // SUBSCRIBE Path
     public static final String TEAM = "/team";
 
-    // SEND
+    // SEND Path
     public static final String SEAT_RESERVATION_CHECK = "/seat/reservation/check";
+    public static final String RESERVATION_CODE = "/reservation/{teamCode}";
+
+    // SendToUser Path
+    public static final String USER_TOPIC_TEAM = TOPIC + "/team";
 }

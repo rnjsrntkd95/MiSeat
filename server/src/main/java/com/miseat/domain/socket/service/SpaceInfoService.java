@@ -28,6 +28,6 @@ public class SpaceInfoService {
                 .findSpace(team.getSn(), LocalDate.now())
                 .orElse(spaceService.create(team));
 
-        return FindSpaceWithReservationRs.create(spaceOnToday);
+        return FindSpaceWithReservationRs.create(teamCode, spaceOnToday);
     }
 }

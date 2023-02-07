@@ -14,6 +14,9 @@ import java.util.List;
 @NoArgsConstructor
 public class FindSpaceWithReservationRs {
 
+    @Schema(description = "팀 코드")
+    private Integer teamCode;
+
     @Schema(description = "스페이스 X 크기")
     private Integer xSize;
 
@@ -26,8 +29,9 @@ public class FindSpaceWithReservationRs {
     @Schema(description = "예약 정보")
     private List<ReservationDto> reservations = new ArrayList<>();
 
-    public static FindSpaceWithReservationRs create(Space space) {
+    public static FindSpaceWithReservationRs create(Integer teamCode, Space space) {
         FindSpaceWithReservationRs rs = new FindSpaceWithReservationRs();
+        rs.teamCode = teamCode;
         rs.xSize = space.getXSize();
         rs.ySize = space.getYSize();
         rs.reservationDate = space.getReservationDate();

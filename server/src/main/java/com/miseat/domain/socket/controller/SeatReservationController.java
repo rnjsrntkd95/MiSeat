@@ -9,12 +9,12 @@ import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.RestController;
 
 import static org.springframework.messaging.simp.SimpMessageHeaderAccessor.USER_HEADER;
 
-@Controller
+@RestController
 @RequiredArgsConstructor
 public class SeatReservationController {
 
