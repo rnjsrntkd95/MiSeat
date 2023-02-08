@@ -1,5 +1,6 @@
 package com.miseat.entity;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -40,7 +41,7 @@ public class Space {
     @Column(nullable = false)
     private Boolean mapLockYn = Boolean.FALSE;
 
-    @OneToMany(mappedBy = "space")
+    @OneToMany(mappedBy = "space", cascade = CascadeType.ALL)
     private List<Seat> seats = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -55,5 +56,9 @@ public class Space {
         space.team = team;
 
         return space;
+    }
+
+    public void addSeats(List<Seat> seats) {
+        this.seats.addAll(seats);
     }
 }

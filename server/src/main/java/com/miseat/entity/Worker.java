@@ -30,7 +30,7 @@ public class Worker extends BaseDateTimeEntity {
     @Column(nullable = false)
     private String name;
 
-    private String nickName;
+    private String nickname;
 
     @Column(nullable = false)
     private String email;   // TODO: 암호화

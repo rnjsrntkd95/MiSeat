@@ -6,7 +6,6 @@ import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -19,8 +18,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-// TODO: Space seatNumber UNIQUE
-public class Seat extends BaseDateTimeEntity {
+public class GridMapSeat extends BaseDateTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,21 +35,7 @@ public class Seat extends BaseDateTimeEntity {
     @Embedded
     private SeatLocation location;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "worker_sn")
-    private Worker worker;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "space_sn", nullable = false)
-    private Space space;
-
-    public static Seat create(SeatType seatType, Integer seatNumber, SeatLocation location, Space space) {
-        Seat seat = new Seat();
-        seat.seatType = seatType;
-        seat.seatNumber = seatNumber;
-        seat.location = location;
-        seat.space = space;
-
-        return seat;
-    }
+    @ManyToOne
+    @JoinColumn(name = "grid_map_sn")
+    private GridMap gridMap;
 }

@@ -1,7 +1,7 @@
 package com.miseat.domain.space.service;
 
 import com.miseat.domain.space.repository.SpaceRepository;
-import com.miseat.entity.MapSetting;
+import com.miseat.entity.GridMap;
 import com.miseat.entity.Space;
 import com.miseat.entity.Team;
 import lombok.RequiredArgsConstructor;
@@ -18,10 +18,10 @@ public class SpaceService {
     private final SpaceRepository spaceRepository;
 
     public Space create(Team team) {
-        MapSetting mapSetting = team.getMapSetting();
+        GridMap gridMap = team.getGridMap();
         Space space = Space.create(
-                mapSetting.getXSize(),
-                mapSetting.getYSize(),
+                gridMap.getXSize(),
+                gridMap.getYSize(),
                 LocalDate.now(),
                 team
         );
