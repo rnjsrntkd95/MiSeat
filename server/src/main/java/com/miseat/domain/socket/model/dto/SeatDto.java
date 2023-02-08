@@ -1,6 +1,6 @@
 package com.miseat.domain.socket.model.dto;
 
-import com.miseat.entity.Reservation;
+import com.miseat.entity.Seat;
 import com.miseat.entity.SeatLocation;
 import com.miseat.entity.Worker;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 
 @Getter
 @Setter
-public class ReservationDto {
+public class SeatDto {
 
     @Schema(description = "좌석 번호")
     private Integer seatNumber;
@@ -29,19 +29,19 @@ public class ReservationDto {
     @Schema(description = "예약자 이메일")
     private String workerEmail;
 
-    public static List<ReservationDto> createAll(List<Reservation> reservations) {
-        return reservations
+    public static List<SeatDto> createAll(List<Seat> seats) {
+        return seats
                 .stream()
-                .map(ReservationDto::create)
+                .map(SeatDto::create)
                 .collect(Collectors.toList());
     }
 
-    private static ReservationDto create(Reservation reservation) {
-        SeatLocation location = reservation.getLocation();
-        Worker worker = reservation.getWorker();
+    private static SeatDto create(Seat seat) {
+        SeatLocation location = seat.getLocation();
+        Worker worker = seat.getWorker();
 
-        ReservationDto dto = new ReservationDto();
-        dto.seatNumber = reservation.getSeatNumber();
+        SeatDto dto = new SeatDto();
+        dto.seatNumber = seat.getSeatNumber();
         dto.x = location.getX();
         dto.y = location.getY();
         dto.workerName = worker.getName();

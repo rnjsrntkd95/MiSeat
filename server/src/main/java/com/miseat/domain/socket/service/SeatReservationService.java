@@ -1,9 +1,9 @@
 package com.miseat.domain.socket.service;
 
-import com.miseat.domain.reservation.service.ReservationFindService;
+import com.miseat.domain.seat.service.SeatFindService;
 import com.miseat.domain.socket.model.rq.CheckSeatReservationRq;
 import com.miseat.domain.socket.model.rs.CheckSeatReservationRs;
-import com.miseat.entity.Reservation;
+import com.miseat.entity.Seat;
 import com.miseat.entity.Worker;
 import com.miseat.global.security.jwt.WorkerContext;
 import lombok.RequiredArgsConstructor;
@@ -17,15 +17,15 @@ import java.util.Objects;
 @RequiredArgsConstructor
 public class SeatReservationService {
 
-    private final ReservationFindService reservationFindService;
+    private final SeatFindService seatFindService;
 
     public CheckSeatReservationRs checkSeatReservation(WorkerContext context, CheckSeatReservationRq rq) {
-        Reservation reservation = reservationFindService.getReservationElseThrow(
+        Seat seat = seatFindService.getSeatElseThrow(
                 context.getTeamCode(),
                 rq.getSeatNumber(),
                 rq.getReservationDate()
         );
-        Worker worker = reservation.getWorker();
+        Worker worker = seat.getWorker();
         Boolean reservationYn = Objects.nonNull(worker);
 
         return CheckSeatReservationRs.create(reservationYn);

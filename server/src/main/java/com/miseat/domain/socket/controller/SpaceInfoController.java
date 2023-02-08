@@ -1,6 +1,6 @@
 package com.miseat.domain.socket.controller;
 
-import com.miseat.domain.socket.model.rs.FindSpaceWithReservationRs;
+import com.miseat.domain.socket.model.rs.FindSpaceWithSeatsRs;
 import com.miseat.domain.socket.service.SpaceInfoService;
 import com.miseat.global.path.WebSocketPath;
 import com.miseat.global.security.jwt.WorkerContext;
@@ -22,7 +22,7 @@ public class SpaceInfoController {
     @Operation(description = "[SEND] 스페이스 예약 정보 조회")
     @MessageMapping(WebSocketPath.TEAM)
     @SendToUser(WebSocketPath.USER_TOPIC_TEAM)
-    public FindSpaceWithReservationRs findSpaceWithReservation(@Header(USER_HEADER) WorkerContext context) {
-        return spaceInfoService.findSpaceWithReservation(context.getTeamCode());
+    public FindSpaceWithSeatsRs findSpaceWithReservation(@Header(USER_HEADER) WorkerContext context) {
+        return spaceInfoService.findSpaceWithSeats(context.getTeamCode());
     }
 }

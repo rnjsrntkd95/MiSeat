@@ -41,7 +41,7 @@ public class Space {
     private Boolean mapLockYn = Boolean.FALSE;
 
     @OneToMany(mappedBy = "space")
-    private List<Reservation> reservations = new ArrayList<>();
+    private List<Seat> seats = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "team_sn", nullable = false)

@@ -1,6 +1,6 @@
 package com.miseat.domain.socket.model.rs;
 
-import com.miseat.domain.socket.model.dto.ReservationDto;
+import com.miseat.domain.socket.model.dto.SeatDto;
 import com.miseat.entity.Space;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
@@ -12,7 +12,7 @@ import java.util.List;
 
 @Getter
 @NoArgsConstructor
-public class FindSpaceWithReservationRs {
+public class FindSpaceWithSeatsRs {
 
     @Schema(description = "팀 코드")
     private Integer teamCode;
@@ -27,15 +27,15 @@ public class FindSpaceWithReservationRs {
     private LocalDate reservationDate;
 
     @Schema(description = "예약 정보")
-    private List<ReservationDto> reservations = new ArrayList<>();
+    private List<SeatDto> seats = new ArrayList<>();
 
-    public static FindSpaceWithReservationRs create(Integer teamCode, Space space) {
-        FindSpaceWithReservationRs rs = new FindSpaceWithReservationRs();
+    public static FindSpaceWithSeatsRs create(Integer teamCode, Space space) {
+        FindSpaceWithSeatsRs rs = new FindSpaceWithSeatsRs();
         rs.teamCode = teamCode;
         rs.xSize = space.getXSize();
         rs.ySize = space.getYSize();
         rs.reservationDate = space.getReservationDate();
-        rs.reservations = ReservationDto.createAll(space.getReservations());
+        rs.seats = SeatDto.createAll(space.getSeats());
 
         return rs;
     }

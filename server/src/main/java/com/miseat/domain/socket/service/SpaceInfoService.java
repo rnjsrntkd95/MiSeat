@@ -1,6 +1,6 @@
 package com.miseat.domain.socket.service;
 
-import com.miseat.domain.socket.model.rs.FindSpaceWithReservationRs;
+import com.miseat.domain.socket.model.rs.FindSpaceWithSeatsRs;
 import com.miseat.domain.space.service.SpaceFindService;
 import com.miseat.domain.space.service.SpaceService;
 import com.miseat.domain.team.service.TeamFindService;
@@ -22,12 +22,12 @@ public class SpaceInfoService {
     private final SpaceFindService spaceFindService;
     private final SpaceService spaceService;
 
-    public FindSpaceWithReservationRs findSpaceWithReservation(@NotNull Integer teamCode) {
+    public FindSpaceWithSeatsRs findSpaceWithSeats(@NotNull Integer teamCode) {
         Team team = teamFindService.getTeamElseThrow(teamCode);
         Space spaceOnToday = spaceFindService
                 .findSpace(team.getSn(), LocalDate.now())
                 .orElse(spaceService.create(team));
 
-        return FindSpaceWithReservationRs.create(teamCode, spaceOnToday);
+        return FindSpaceWithSeatsRs.create(teamCode, spaceOnToday);
     }
 }

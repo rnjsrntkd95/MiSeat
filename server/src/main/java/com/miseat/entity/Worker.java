@@ -41,7 +41,7 @@ public class Worker extends BaseDateTimeEntity {
     private String phone;
 
     @OneToMany(mappedBy = "worker")
-    private List<Reservation> reservations = new ArrayList<>();
+    private List<Seat> seats = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "team_sn", nullable = false)
