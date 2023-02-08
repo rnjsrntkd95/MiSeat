@@ -1,4 +1,4 @@
-package com.miseat.global.security;
+package com.miseat.global.config;
 
 import com.miseat.global.profile.AppProfiles;
 import com.miseat.global.security.filter.CustomAccessDeniedHandler;
@@ -6,8 +6,11 @@ import com.miseat.global.security.filter.CustomAuthenticationEntryPoint;
 import com.miseat.global.security.filter.JwtAuthenticationFilter;
 import com.miseat.global.security.jwt.provider.JwtAuthenticationProvider;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
+import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.core.env.Environment;
 import org.springframework.core.env.Profiles;
@@ -36,9 +39,11 @@ public class SecurityConfig {
                 .formLogin().disable()
                 .logout().disable()
                 .csrf().disable()
+                .cors().and()
+                .headers(headers -> headers.frameOptions().sameOrigin())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/test").permitAll() // test controller
+                        .requestMatchers("/ws-miseat/**").permitAll()
                 )
                 .addFilterBefore(createJwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling()
@@ -53,7 +58,7 @@ public class SecurityConfig {
     }
 
     @Bean
-    @Order(0)
+    @Order(Ordered.HIGHEST_PRECEDENCE)
     public SecurityFilterChain ignoringFilterChain(HttpSecurity http) throws Exception {
         return http
                 .securityMatcher(getIgnoringPattern())
@@ -73,5 +78,17 @@ public class SecurityConfig {
         }
 
         return pattern.toArray(new String[0]);
+    }
+
+    @Profile(AppProfiles.H2)
+    @Bean
+    @Order(Ordered.HIGHEST_PRECEDENCE)
+    public SecurityFilterChain h2ConsoleFilterChain(HttpSecurity http) throws Exception {
+        return http
+                .securityMatcher(PathRequest.toH2Console())
+                .authorizeHttpRequests(authorize -> authorize.anyRequest().permitAll())
+                .headers(headers -> headers.frameOptions().sameOrigin())
+                .csrf().disable()
+                .build();
     }
 }

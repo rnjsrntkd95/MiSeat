@@ -1,5 +1,7 @@
-package com.miseat.global.swagger;
+package com.miseat.global.config;
 
+import com.miseat.global.swagger.SwaggerApiInfo;
+import com.miseat.global.swagger.SwaggerConfigConstants;
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;

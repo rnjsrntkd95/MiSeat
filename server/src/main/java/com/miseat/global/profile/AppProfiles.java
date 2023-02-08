@@ -4,6 +4,7 @@ import org.springframework.core.env.Environment;
 
 public class AppProfiles {
 
+    public static final String H2 = "h2";
     public static final String LOCAL = "local";
     public static final String KR_DEVELOPMENT = "kr-development";
     public static final String KR_STAGING = "kr-staging";
