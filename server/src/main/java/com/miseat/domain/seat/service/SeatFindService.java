@@ -21,4 +21,10 @@ public class SeatFindService {
                 .findFirstByTeamAndDateAndSeatNumber(teamCode, reservationDate, seatNumber)
                 .orElseThrow(NotFoundSeatException::new);
     }
+
+    public Seat getSeatElseThrow(Long spaceSn, Integer seatNumber) {
+        return seatRepository
+                .findFirstBySpaceSnAndSeatNumber(spaceSn, seatNumber)
+                .orElseThrow(NotFoundSeatException::new);
+    }
 }

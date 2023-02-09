@@ -54,4 +54,8 @@ public class Seat extends BaseDateTimeEntity {
 
         return seat;
     }
+
+    public void setWorker(Worker worker) {
+        this.worker = worker;
+    }
 }

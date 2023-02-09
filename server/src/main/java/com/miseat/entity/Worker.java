@@ -27,6 +27,12 @@ public class Worker extends BaseDateTimeEntity {
     @Column(name = "sn", nullable = false)
     private Long sn;
 
+    @Column(nullable = false, unique = true)
+    private String userId;
+
+    @Column(nullable = false)
+    private String password;    // TODO: 암호화
+
     @Column(nullable = false)
     private String name;
 
@@ -34,9 +40,6 @@ public class Worker extends BaseDateTimeEntity {
 
     @Column(nullable = false)
     private String email;   // TODO: 암호화
-
-    @Column(nullable = false)
-    private String password;    // TODO: 암호화
 
     private String phone;
 

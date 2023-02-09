@@ -29,4 +29,13 @@ public class SeatRepositoryImpl implements SeatRepositoryCustom {
                 )
                 .fetchFirst());
     }
+
+    @Override
+    public Optional<Seat> findFirstBySpaceSnAndSeatNumber(Long spaceSn, Integer seatNumber) {
+        return Optional.ofNullable(jpaQueryFactory
+                .selectFrom(seat)
+                .innerJoin(seat.space, space)
+                .where(space.sn.eq(spaceSn))
+                .fetchFirst());
+    }
 }

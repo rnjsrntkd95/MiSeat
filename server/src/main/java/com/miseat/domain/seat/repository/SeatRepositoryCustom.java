@@ -8,4 +8,6 @@ import java.util.Optional;
 public interface SeatRepositoryCustom {
 
     Optional<Seat> findFirstByTeamAndDateAndSeatNumber(Integer teamCode, LocalDate reservationDate, Integer seatNumber);
+
+    Optional<Seat> findFirstBySpaceSnAndSeatNumber(Long spaceSn, Integer seatNumber);
 }
