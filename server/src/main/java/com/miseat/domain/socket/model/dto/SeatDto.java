@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Getter
@@ -26,9 +27,6 @@ public class SeatDto {
     @Schema(description = "예약자 이름")
     private String workerName;
 
-    @Schema(description = "예약자 이메일")
-    private String workerEmail;
-
     public static List<SeatDto> createAll(List<Seat> seats) {
         return seats
                 .stream()
@@ -44,8 +42,10 @@ public class SeatDto {
         dto.seatNumber = seat.getSeatNumber();
         dto.x = location.getX();
         dto.y = location.getY();
-        dto.workerName = worker.getName();
-        dto.workerEmail = worker.getEmail();
+
+        if (Objects.nonNull(worker)) {
+            dto.workerName = worker.getName();
+        }
 
         return dto;
     }
