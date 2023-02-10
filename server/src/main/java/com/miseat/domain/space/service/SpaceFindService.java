@@ -1,5 +1,6 @@
 package com.miseat.domain.space.service;
 
+import com.miseat.domain.space.exception.NotFoundSpaceException;
 import com.miseat.domain.space.repository.SpaceRepository;
 import com.miseat.entity.Space;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +16,11 @@ import java.util.Optional;
 public class SpaceFindService {
 
     private final SpaceRepository spaceRepository;
+
+    public Space findSpaceElseThrow(Long spaceSn) {
+        return spaceRepository.findById(spaceSn)
+                .orElseThrow(NotFoundSpaceException::new);
+    }
 
     public Optional<Space> findSpace(Long teamSn, LocalDate reservationDate) {
         return spaceRepository.findByTeamSnAndReservationDate(teamSn, reservationDate);

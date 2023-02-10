@@ -1,7 +1,9 @@
 package com.miseat.domain.seat.repository;
 
 import com.miseat.entity.Seat;
+import com.miseat.entity.Worker;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import jakarta.persistence.LockModeType;
 import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDate;
@@ -37,5 +39,15 @@ public class SeatRepositoryImpl implements SeatRepositoryCustom {
                 .innerJoin(seat.space, space)
                 .where(space.sn.eq(spaceSn))
                 .fetchFirst());
+    }
+
+    public long updateWorkerBySeatSnAndSeatNumber(Worker worker, Long seatSn, Integer seatNumber) {
+        return jpaQueryFactory
+                .update(seat)
+                .set(seat.worker, worker)
+                .where(seat.sn.eq(seatSn),
+                        seat.seatNumber.eq(seatNumber),
+                        seat.worker.isNull())
+                .execute();
     }
 }

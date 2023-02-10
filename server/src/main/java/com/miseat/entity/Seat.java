@@ -12,14 +12,20 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
+@Table(
+        uniqueConstraints = @UniqueConstraint(
+                name = "unique_space_seat_number",
+                columnNames = {"col1", "col2"}
+        ))
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-// TODO: Space seatNumber UNIQUE
 public class Seat extends BaseDateTimeEntity {
 
     @Id
