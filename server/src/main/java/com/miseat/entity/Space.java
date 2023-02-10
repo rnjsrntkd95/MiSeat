@@ -10,6 +10,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,9 +21,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Table(uniqueConstraints = @UniqueConstraint(
+        name = "unique_team_reservation_date",
+        columnNames = {"team_sn", "reservationDate"}
+))
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-// TODO: Team, reservationDate UNIQUE
 public class Space {
 
     @Id

@@ -19,11 +19,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(
-        uniqueConstraints = @UniqueConstraint(
-                name = "unique_space_seat_number",
-                columnNames = {"col1", "col2"}
-        ))
+@Table(uniqueConstraints = @UniqueConstraint(
+        name = "unique_space_seat_number",
+        columnNames = {"space_sn", "seat_number"}
+))
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Seat extends BaseDateTimeEntity {
@@ -37,18 +36,18 @@ public class Seat extends BaseDateTimeEntity {
     @Enumerated(EnumType.STRING)
     private SeatType seatType = SeatType.NONE;
 
-    @Column
+    @Column(name = "seat_number")
     private Integer seatNumber;
 
     @Embedded
     private SeatLocation location;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "worker_sn")
+    @JoinColumn(columnDefinition = "worker_sn")
     private Worker worker;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "space_sn", nullable = false)
+    @JoinColumn(columnDefinition = "space_sn", nullable = false)
     private Space space;
 
     public static Seat create(SeatType seatType, Integer seatNumber, SeatLocation location, Space space) {

@@ -5,13 +5,15 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
+
 @Getter
 @Setter
 public class ReservationInfoDto {
 
-    @Schema(description = "스페이스 SN")
+    @Schema(description = "예약 날짜")
     @NotNull
-    private Long spaceSn;
+    private LocalDate date;
 
     @Schema(description = "좌석 번호")
     @NotNull

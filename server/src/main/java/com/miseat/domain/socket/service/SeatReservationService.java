@@ -8,6 +8,7 @@ import com.miseat.domain.socket.model.dto.ReservationInfoDto;
 import com.miseat.domain.socket.model.rq.CheckSeatReservationRq;
 import com.miseat.domain.socket.model.rs.CheckSeatReservationRs;
 import com.miseat.domain.socket.model.rs.ReserveSeatRs;
+import com.miseat.domain.space.service.SpaceFindService;
 import com.miseat.domain.worker.service.WorkerFindService;
 import com.miseat.entity.Seat;
 import com.miseat.entity.Space;
@@ -34,6 +35,7 @@ public class SeatReservationService {
 
     private final SeatFindService seatFindService;
     private final WorkerFindService workerFindService;
+    private final SpaceFindService spaceFindService;
 
     private final SeatRepository seatRepository;
 
@@ -51,14 +53,16 @@ public class SeatReservationService {
 
     @Async(THREAD_POOL_TASK_EXECUTOR)
     public void reserveSeat(WorkerContext context, ReservationInfoDto rq) {
-        Worker worker = workerFindService.getWorkerElseThrow(context.getUserId(), context.getTeamCode());
-        Seat seat = seatFindService.getSeatElseThrow(rq.getSpaceSn(), rq.getSeatNumber());
-        Space space = seat.getSpace();
+        Integer teamCode = context.getTeamCode();
+
+        Space space = spaceFindService.findSpaceElseThrow(teamCode, rq.getDate());
+        Seat seat = seatFindService.getSeatElseThrow(space.getSn(), rq.getSeatNumber());
 
         if (!SeatType.FREE.equals(seat.getSeatType())) {
             throw new NotAvailableSeatException();
         }
 
+        Worker worker = workerFindService.getWorkerElseThrow(context.getUserId(), teamCode);
         reserveElseThrowIfFailed(worker, seat, rq.getSeatNumber());
         sendCompletedReservationMessage(context, worker, seat, space);
     }
