@@ -11,6 +11,8 @@ import org.springframework.messaging.simp.annotation.SendToUser;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDate;
+
 @RestController
 @RequiredArgsConstructor
 public class SpaceInfoController {
@@ -21,6 +23,6 @@ public class SpaceInfoController {
     @MessageMapping(WebSocketPath.TEAM)
     @SendToUser(WebSocketPath.USER_TOPIC_TEAM)
     public FindSpaceWithSeatsRs findSpaceWithSeats(@AuthenticationPrincipal WorkerContext context) {
-        return spaceInfoService.findSpaceWithSeats(context.getTeamCode());
+        return spaceInfoService.findSpaceWithSeats(context.getTeamCode(), LocalDate.now());
     }
 }

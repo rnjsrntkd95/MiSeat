@@ -26,11 +26,11 @@ public class SpaceInfoService {
     private final SpaceService spaceService;
     private final SeatService seatService;
 
-    public FindSpaceWithSeatsRs findSpaceWithSeats(@NotNull Integer teamCode) {
+    public FindSpaceWithSeatsRs findSpaceWithSeats(@NotNull Integer teamCode, LocalDate reservationDate) {
         Team team = teamFindService.getTeamElseThrow(teamCode);
         Space spaceOnToday = spaceFindService
-                .findSpace(team.getSn(), LocalDate.now())
-                .orElse(createSpaceAndSeats(team));
+                .findSpace(team.getSn(), reservationDate)
+                .orElseGet(() -> createSpaceAndSeats(team));
 
         return FindSpaceWithSeatsRs.create(teamCode, spaceOnToday);
     }
