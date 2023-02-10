@@ -8,6 +8,7 @@ import com.miseat.domain.socket.model.dto.ReservationInfoDto;
 import com.miseat.domain.socket.model.rq.CheckSeatReservationRq;
 import com.miseat.domain.socket.model.rs.CheckSeatReservationRs;
 import com.miseat.domain.socket.model.rs.ReserveSeatRs;
+import com.miseat.domain.socket.model.rs.UserReservationResultRs;
 import com.miseat.domain.space.service.SpaceFindService;
 import com.miseat.domain.worker.service.WorkerFindService;
 import com.miseat.entity.Seat;
@@ -22,6 +23,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.Objects;
 
 import static com.miseat.global.config.AsyncConfig.THREAD_POOL_TASK_EXECUTOR;
@@ -51,7 +53,6 @@ public class SeatReservationService {
         return CheckSeatReservationRs.create(reservationYn);
     }
 
-    // TODO: FAIL 메시지 어떻게 보낼 지
     @Async(THREAD_POOL_TASK_EXECUTOR)
     public void reserveSeat(WorkerContext context, ReservationInfoDto rq) {
         Integer teamCode = context.getTeamCode();
@@ -60,15 +61,16 @@ public class SeatReservationService {
         Seat seat = seatFindService.getSeatElseThrow(space.getSn(), rq.getSeatNumber());
 
         if (!SeatType.FREE.equals(seat.getSeatType())) {
-            throw new NotAvailableSeatException();
+            throw new NotAvailableSeatException();  // TODO: FAIL 메시지 어떻게 보낼 지
         }
 
         Worker worker = workerFindService.getWorkerElseThrow(context.getUserId(), teamCode);
-        reserveElseThrowIfFailed(worker, seat, rq.getSeatNumber());
-        sendCompletedReservationMessage(context, worker, seat, space);
+        reserveElseThrowIfFailed(worker, seat);
+        sendReservationInfoToSubscriber(worker, teamCode, seat, space);
     }
 
-    private void reserveElseThrowIfFailed(Worker worker, Seat seat, Integer seatNumber) {
+    private void reserveElseThrowIfFailed(Worker worker, Seat seat) {
+        Integer seatNumber = seat.getSeatNumber();
         long result = seatRepository.updateWorkerBySeatSnAndSeatNumber(
                 worker,
                 seat.getSn(),
@@ -77,16 +79,24 @@ public class SeatReservationService {
         boolean isFailed = result == 0;
 
         if (isFailed) {
-            throw new AlreadyReservedSeatException();
+            throw new AlreadyReservedSeatException();     // TODO: FAIL 메시지 어떻게 보낼 지
         }
+
+        Space space = seat.getSpace();
+        sendSuccessReservationToUser(worker, space.getReservationDate(), seatNumber);
     }
 
-    private void sendCompletedReservationMessage(WorkerContext context, Worker worker, Seat seat, Space space) {
+    private void sendSuccessReservationToUser(Worker worker, LocalDate reservationDate, Integer seatNumber) {
+        UserReservationResultRs rs = UserReservationResultRs.createSuccessType(reservationDate, seatNumber);
+        messenger.convertAndSendToUser(worker.getUserId(), WebSocketPath.USER_SUB_RESERVATION_RESULT, rs);
+    }
+
+    private void sendReservationInfoToSubscriber(Worker worker, Integer teamCode, Seat seat, Space space) {
         ReserveSeatRs rs = ReserveSeatRs.create(
                 space.getReservationDate(),
                 seat.getSeatNumber(),
                 worker.getName()
         );
-        messenger.convertAndSend(WebSocketPath.TOPIC_TEAM + WebSocketPath.PATH + context.getTeamCode(), rs);
+        messenger.convertAndSend(WebSocketPath.SUB_TEAM + WebSocketPath.PATH + teamCode, rs);
     }
 }

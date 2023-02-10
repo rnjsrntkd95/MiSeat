@@ -26,7 +26,7 @@ public class SeatReservationController {
     // TODO: 미정
     @Operation(summary = "좌석 예약 정보 확인")
     @MessageMapping(WebSocketPath.SEAT_RESERVATION_CHECK)
-    @SendToUser(WebSocketPath.USER_TOPIC_TEAM)
+    @SendToUser(WebSocketPath.USER_SUB_TEAM)
     public CheckSeatReservationRs checkSeatReservation(@AuthenticationPrincipal WorkerContext context,
                                                        @Validated CheckSeatReservationRq rq) {
         return seatReservationService.checkSeatReservation(context, rq);

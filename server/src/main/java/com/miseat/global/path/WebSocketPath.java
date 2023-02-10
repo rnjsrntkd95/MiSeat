@@ -12,13 +12,13 @@ public class WebSocketPath {
     public static final String WORKER = "/worker";
 
     // Client To Send Path
-    public static final String TEAM = "/team";
     public static final String SEAT_RESERVATION_CHECK = "/seat/reservation/check";
     public static final String RESERVATION = "/reservation";
 
     // @SendToUser Path
-    public static final String USER_TOPIC_TEAM = SUB + "/team";
+    public static final String USER_SUB_TEAM = SUB + "/team";
+    public static final String USER_SUB_RESERVATION_RESULT = SUB + "/reservation/result";
 
     // @SendTo Path
-    public static final String TOPIC_TEAM = SUB + "/team";
+    public static final String SUB_TEAM = SUB + "/team";
 }
