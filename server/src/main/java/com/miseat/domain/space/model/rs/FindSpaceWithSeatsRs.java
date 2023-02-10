@@ -1,4 +1,4 @@
-package com.miseat.domain.socket.model.rs;
+package com.miseat.domain.space.model.rs;
 
 import com.miseat.domain.socket.model.dto.SeatDto;
 import com.miseat.entity.Space;
