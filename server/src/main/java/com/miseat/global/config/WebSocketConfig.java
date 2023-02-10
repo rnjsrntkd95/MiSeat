@@ -28,8 +28,8 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
     @Override
     public void configureMessageBroker(MessageBrokerRegistry config) {
-        config.setApplicationDestinationPrefixes(WebSocketPath.APP);
-        config.enableSimpleBroker(WebSocketPath.TOPIC, WebSocketPath.QUEUE);
+        config.setApplicationDestinationPrefixes(WebSocketPath.PUB);
+        config.enableSimpleBroker(WebSocketPath.SUB, WebSocketPath.DM);
         config.setUserDestinationPrefix(WebSocketPath.WORKER);
     }
 

@@ -51,6 +51,7 @@ public class SeatReservationService {
         return CheckSeatReservationRs.create(reservationYn);
     }
 
+    // TODO: FAIL 메시지 어떻게 보낼 지
     @Async(THREAD_POOL_TASK_EXECUTOR)
     public void reserveSeat(WorkerContext context, ReservationInfoDto rq) {
         Integer teamCode = context.getTeamCode();

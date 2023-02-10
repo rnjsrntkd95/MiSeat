@@ -6,9 +6,9 @@ public class WebSocketPath {
     // Root Path
     public static final String PATH = "/";
     public static final String WS_MISEAT = "/ws-miseat";
-    public static final String APP = "/app";
-    public static final String TOPIC = "/topic";
-    public static final String QUEUE = "/queue";
+    public static final String PUB = "/pub";
+    public static final String SUB = "/sub";
+    public static final String DM = "/dm";
     public static final String WORKER = "/worker";
 
     // Client To Send Path
@@ -17,8 +17,8 @@ public class WebSocketPath {
     public static final String RESERVATION = "/reservation";
 
     // @SendToUser Path
-    public static final String USER_TOPIC_TEAM = TOPIC + "/team";
+    public static final String USER_TOPIC_TEAM = SUB + "/team";
 
     // @SendTo Path
-    public static final String TOPIC_TEAM = TOPIC + "/team";
+    public static final String TOPIC_TEAM = SUB + "/team";
 }
