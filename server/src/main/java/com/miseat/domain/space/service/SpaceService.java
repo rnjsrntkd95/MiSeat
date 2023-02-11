@@ -17,12 +17,12 @@ public class SpaceService {
 
     private final SpaceRepository spaceRepository;
 
-    public Space create(Team team) {
+    public Space create(Team team, LocalDate reservationDate) {
         GridMap gridMap = team.getGridMap();
         Space space = Space.create(
                 gridMap.getXSize(),
                 gridMap.getYSize(),
-                LocalDate.now(),
+                reservationDate,
                 team
         );
 
