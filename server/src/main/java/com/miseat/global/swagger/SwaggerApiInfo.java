@@ -1,21 +1,34 @@
 package com.miseat.global.swagger;
 
-import java.util.List;
+import com.miseat.global.path.ApiPath;
+
+import java.lang.reflect.Field;
+import java.util.Arrays;
 
 public enum SwaggerApiInfo {
 
-    MISEAT_API(List.of("/**"), "MiSeat API"), // TODO: Path 지정 필요
+    MISEAT_API(ApiPath.class, "MiSeat API"),
     ;
 
-    public final List<String> path;
+    public final Class<?> pathClass;
     public final String title;
 
-    SwaggerApiInfo(List<String> path, String title) {
-        this.path = path;
+    SwaggerApiInfo(Class<?> pathClass, String title) {
+        this.pathClass = pathClass;
         this.title = title;
     }
 
-    public static String[] getApiPathArray(SwaggerApiInfo api) {
-        return api.path.toArray(new String[0]);
+    public String[] getDeclaredPath() {
+        return Arrays.stream(this.pathClass.getDeclaredFields())
+                .map(this::getPathValue)
+                .toArray(String[]::new);
+    }
+
+    private String getPathValue(Field field) {
+        try {
+            return field.get(this).toString();
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

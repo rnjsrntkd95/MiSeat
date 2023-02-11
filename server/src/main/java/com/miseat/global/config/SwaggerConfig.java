@@ -6,6 +6,7 @@ import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.info.License;
+import io.swagger.v3.oas.models.security.SecurityRequirement;
 import io.swagger.v3.oas.models.security.SecurityScheme;
 import io.swagger.v3.oas.models.servers.Server;
 import org.springdoc.core.models.GroupedOpenApi;
@@ -36,7 +37,7 @@ public class SwaggerConfig {
 
     @Bean
     public GroupedOpenApi miseatApi() {
-        String[] miseatApiPath = SwaggerApiInfo.getApiPathArray(SwaggerApiInfo.MISEAT_API);
+        String[] miseatApiPath = SwaggerApiInfo.MISEAT_API.getDeclaredPath();
         return GroupedOpenApi.builder()
                 .group(SwaggerConfigConstants.MISEAT_GROUP)
                 .pathsToMatch(miseatApiPath)
@@ -48,6 +49,7 @@ public class SwaggerConfig {
         return new OpenAPI()
                 .info(createApiInfo())
                 .components(createApiComponent())
+                .addSecurityItem(createSecurityRequirement())
                 .addServersItem(createApiServer());
     }
 
@@ -77,6 +79,10 @@ public class SwaggerConfig {
                 .bearerFormat(JWT)
                 .in(SecurityScheme.In.HEADER)
                 .name(HttpHeaders.AUTHORIZATION);
+    }
+
+    private SecurityRequirement createSecurityRequirement() {
+        return new SecurityRequirement().addList(JWT);
     }
 
     private Server createApiServer() {
