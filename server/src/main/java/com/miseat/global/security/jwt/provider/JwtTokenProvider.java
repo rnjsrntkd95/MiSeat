@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static com.miseat.global.security.jwt.JwtClaimKey.TEAM_CODE;
-import static com.miseat.global.security.jwt.JwtClaimKey.USERNAME;
+import static com.miseat.global.security.jwt.JwtClaimKey.USER_ID;
 
 @Slf4j
 @Component
@@ -28,13 +28,13 @@ public class JwtTokenProvider {
 
     private final JwtProperty jwtProperty;
 
-    public String createToken(String username, Integer teamCode, long tokenTimeToLive) {
+    public String createToken(String userId, Integer teamCode, long tokenTimeToLive) {
         Date now = DateUtils.getCurrentDate();
         Date expiredDate = DateUtils.addTime(now, tokenTimeToLive);
 
         return Jwts.builder()
                 .setHeader(createJwtHeader())
-                .setClaims(createJwtClaims(username, teamCode))
+                .setClaims(createJwtClaims(userId, teamCode))
                 .setIssuedAt(now)
                 .setIssuer(ISSUER)
                 .setExpiration(expiredDate)
@@ -50,9 +50,9 @@ public class JwtTokenProvider {
         return headers;
     }
 
-    private Map<String, Object> createJwtClaims(String username, Integer teamCode) {
+    private Map<String, Object> createJwtClaims(String userId, Integer teamCode) {
         Map<String, Object> claims = new HashMap<>();
-        claims.put(USERNAME.getKeyName(), username);
+        claims.put(USER_ID.getKeyName(), userId);
         claims.put(TEAM_CODE.getKeyName(), teamCode);
         // TODO: ROLE 추가
 

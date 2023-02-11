@@ -67,3 +67,21 @@ dependencies {
 tasks.named('test') {
     useJUnitPlatform()
 }
+
+//Querydsl Q Class 생성 위치
+def generated = 'src/main/generated'
+
+//Querydsl Q Class 생성 위치 지정
+tasks.withType(JavaCompile) {
+    options.getGeneratedSourceOutputDirectory().set(file(generated))
+}
+
+//java source set 에 Querydsl Q Class 위치 추가
+sourceSets {
+    main.java.srcDirs += [generated]
+}
+
+//gradle clean 시, Q Class 디렉토리까지 삭제하도록 설정
+clean {
+    delete file(generated)
+}

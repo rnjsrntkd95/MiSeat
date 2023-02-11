@@ -33,10 +33,10 @@ public class JwtAuthenticationProvider {
     public WorkerContext createWorkerContext(@NotNull String authorization) {
         String accessToken = getAccessToken(authorization);
         Claims claims = jwtTokenProvider.parseClaims(accessToken);
-        String username = claims.get(JwtClaimKey.USERNAME.getKeyName(), String.class);
+        String userId = claims.get(JwtClaimKey.USER_ID.getKeyName(), String.class);
         Integer teamCode = claims.get(JwtClaimKey.TEAM_CODE.getKeyName(), Integer.class);
 
-        return new WorkerContext(username, teamCode, null);
+        return new WorkerContext(userId, teamCode, null);
     }
 
     public String getAccessToken(String bearerToken) {

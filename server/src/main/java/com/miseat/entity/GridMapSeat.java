@@ -1,8 +1,11 @@
 package com.miseat.entity;
 
+import com.miseat.entity.enums.SeatType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -16,7 +19,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Reservation extends BaseDateTimeEntity {
+public class GridMapSeat {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,16 +27,16 @@ public class Reservation extends BaseDateTimeEntity {
     private Long sn;
 
     @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private SeatType seatType = SeatType.NONE;
+
+    @Column
     private Integer seatNumber;
 
     @Embedded
     private SeatLocation location;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "worker_sn")
-    private Worker worker;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "space_sn", nullable = false)
-    private Space space;
+    @JoinColumn(name = "grid_map_sn", nullable = false)
+    private GridMap gridMap;
 }

@@ -15,14 +15,17 @@ public class WorkerContext extends CustomUser implements Principal {
     @Serial
     private static final long serialVersionUID = SpringSecurityCoreVersion.SERIAL_VERSION_UID;
 
-    // TODO: 유저 필드 정의
-    private final String name;
-
+    private final String userId;
     private final Integer teamCode;
 
-    public WorkerContext(String name, Integer teamCode, Set<? extends GrantedAuthority> authorities) {
-        super(name, null, authorities);  // TODO: username, password, authorities 재정의
-        this.name = name;
+    public WorkerContext(String userId, Integer teamCode, Set<? extends GrantedAuthority> authorities) {
+        super(userId, null, authorities);
+        this.userId = userId;
         this.teamCode = teamCode;
+    }
+
+    @Override
+    public String getName() {
+        return userId;
     }
 }

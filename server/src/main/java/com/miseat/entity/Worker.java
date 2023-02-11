@@ -27,21 +27,24 @@ public class Worker extends BaseDateTimeEntity {
     @Column(name = "sn", nullable = false)
     private Long sn;
 
-    @Column(nullable = false)
-    private String name;
-
-    private String nickName;
-
-    @Column(nullable = false)
-    private String email;   // TODO: 암호화
+    @Column(nullable = false, unique = true)
+    private String userId;
 
     @Column(nullable = false)
     private String password;    // TODO: 암호화
 
+    @Column(nullable = false)
+    private String name;
+
+    private String nickname;
+
+    @Column(nullable = false)
+    private String email;   // TODO: 암호화
+
     private String phone;
 
     @OneToMany(mappedBy = "worker")
-    private List<Reservation> reservations = new ArrayList<>();
+    private List<Seat> seats = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "team_sn", nullable = false)

@@ -28,7 +28,7 @@ public class Team extends BaseDateTimeEntity {
     private Integer teamCode;
 
     @OneToOne(mappedBy = "team")
-    private MapSetting mapSetting;
+    private GridMap gridMap;
 
     @OneToMany(mappedBy = "team")
     private List<Space> spaces = new ArrayList<>();
