@@ -3,16 +3,17 @@ import React, { useEffect, useState, useCallback, useRef } from 'react';
 import SockJS from 'sockjs-client';
 import * as StompJS from '@stomp/stompjs';
 
+const ACCESSTOKEN =
+  'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJNaVNlYXQgSXNzdWVyIiwidGVhbUNvZGUiOjc3Nzc3NywiZXhwIjo5MjIzNTM5NTYzOTk4MiwiaWF0IjoxNjc1MjcxNDM0LCJ1c2VybmFtZSI6ImtrczEwMjMifQ.CLoY0PNZlRaBeid5q-KoWeMog3RLlQWLwf9xzJgqAxc';
+
 const SocketJs = () => {
   const client = useRef<StompJS.Client | null>(null);
 
   const connect = () => {
     client.current = new StompJS.Client({
-      // brokerURL: 'ws://10.111.3.121:8080/ws-miseat/ws',
       webSocketFactory: () => new SockJS(`${process.env.DOMAIN}`),
       connectHeaders: {
-        login: 'user',
-        password: 'password',
+        Authorization: ACCESSTOKEN,
       },
       debug: function (err) {
         console.log(err);
@@ -22,13 +23,13 @@ const SocketJs = () => {
       heartbeatIncoming: 4000,
       heartbeatOutgoing: 4000,
       onConnect: () => {
-        subscribe();
+        subscribeTeamSeat();
       },
       onStompError: (frame) => {
-        console.error(frame);
+        console.error('error', frame);
+        console.log(frame.headers['message']);
       },
     });
-
     client.current.activate();
   };
 
@@ -36,8 +37,16 @@ const SocketJs = () => {
     client.current?.deactivate();
   };
 
-  const subscribe = () => {
-    client.current?.subscribe(`/sub/3`, (msg: any) => {
+  /**팀원들 실시간 좌석 예약 결과 */
+  const subscribeTeamSeat = () => {
+    client.current?.subscribe(`/worker/topic/team`, (msg: any) => {
+      console.log('받은 메세지', msg.body);
+    });
+  };
+
+  /**실시간 좌석 예약 결과 */
+  const subscribeSeatResult = () => {
+    client.current?.subscribe(`/app/reservation/team`, (msg: any) => {
       console.log('받은 메세지', msg.body);
     });
   };
@@ -62,7 +71,7 @@ const SocketJs = () => {
   return (
     <>
       <div>
-        <div id='menu'>
+        <div id="menu">
           <p>Welcome,</p>
         </div>
         <button onClick={() => publish()}>버어튼</button>

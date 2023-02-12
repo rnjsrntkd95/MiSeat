@@ -1,0 +1,12 @@
+{
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Launch MiSeatApplication",
+      "request": "launch",
+      "mainClass": "com.miseat.MiSeatApplication",
+      "projectName": "MiSeat",
+      "args": "--spring.profiles.active=h2"
+    }
+  ]
+}

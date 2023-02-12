@@ -1,27 +1,43 @@
 'use client';
-import { useEffect, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import RCalendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import '@components/calendar/calendarCustom.scss';
 import styles from '@components/calendar/calendar.module.scss';
+import NoSsr from '@components/noSsr';
 
-const Calendar = () => {
-  const [isRender, setIsRender] = useState<boolean>(false);
-  useEffect(() => {
-    setIsRender(true);
-  }, []);
+type ViewType = 'WHOLE' | 'RANGE';
+
+interface CalendarViewProps {
+  viewType?: ViewType;
+  isView?: boolean;
+  daySelect?: () => void;
+}
+
+const Calendar: FC<CalendarViewProps> = ({ viewType, isView, daySelect }) => {
+  let calenderProps;
+  if (viewType)
+    calenderProps = {
+      onClickDay: daySelect,
+    };
 
   /**
-   * 서버사이드에서 pre-rendering된 React 트리와
-   * 브라우저에서 처음 rendering되는 React 트리가 달랐기 때문에 발생한 에러
-   */
-
-  if (!isRender) return null;
-
+   * TODO:
+   * formatDay로 주간 달력 만들자 */
   return (
-    <div className={styles.wrap}>
-      <RCalendar />
-    </div>
+    <NoSsr>
+      <div className={styles.wrap}>
+        <RCalendar
+          onChange={(e) => console.log(e)}
+          activeStartDate={new Date(2022, 1, 31)}
+          formatDay={(locale, date) => {
+            console.log(locale, date);
+            return '';
+          }}
+          {...calenderProps}
+        />
+      </div>
+    </NoSsr>
   );
 };
 

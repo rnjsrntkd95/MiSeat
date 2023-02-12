@@ -1,0 +1,22 @@
+.wrap {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 500px;
+}
+
+.table {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.input_Wrap {
+  display: flex;
+  flex-direction: column;
+
+  .date {
+    display: flex;
+    justify-content: end;
+  }
+}
