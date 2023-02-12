@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Service
 @Transactional
@@ -27,5 +28,9 @@ public class SpaceService {
         );
 
         return spaceRepository.save(space);
+    }
+
+    public void unlockMap(Team team, List<LocalDate> reservationDates) {
+        spaceRepository.updateMapLockByTeamAndReservationDates(team, reservationDates, Boolean.FALSE);
     }
 }

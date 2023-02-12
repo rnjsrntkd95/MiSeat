@@ -1,10 +1,12 @@
 package com.miseat.domain.space.repository;
 
 import com.miseat.entity.Space;
+import com.miseat.entity.Team;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 import static com.miseat.entity.QSpace.space;
@@ -34,5 +36,15 @@ public class SpaceRepositoryImpl implements SpaceRepositoryCustom {
                         space.reservationDate.eq(reservationDate)
                 )
                 .fetchFirst());
+    }
+
+    @Override
+    public long updateMapLockByTeamAndReservationDates(Team team, List<LocalDate> reservationDates, Boolean mapLockYn) {
+        return jpaQueryFactory
+                .update(space)
+                .set(space.mapLockYn, mapLockYn)
+                .where(space.team.eq(team),
+                        space.reservationDate.in(reservationDates))
+                .execute();
     }
 }

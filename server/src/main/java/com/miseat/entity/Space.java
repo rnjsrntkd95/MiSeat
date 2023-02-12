@@ -44,7 +44,7 @@ public class Space {
     private LocalDate reservationDate;
 
     @Column(nullable = false)
-    private Boolean mapLockYn = Boolean.FALSE;
+    private Boolean mapLockYn = Boolean.TRUE;
 
     @OneToMany(mappedBy = "space", cascade = CascadeType.ALL)
     private List<Seat> seats = new ArrayList<>();

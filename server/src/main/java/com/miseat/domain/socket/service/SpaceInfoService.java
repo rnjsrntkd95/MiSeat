@@ -35,7 +35,7 @@ public class SpaceInfoService {
         return FindSpaceWithSeatsRs.create(teamCode, space);
     }
 
-    private Space createSpaceAndSeats(Team team, LocalDate reservationDate) {
+    public Space createSpaceAndSeats(Team team, LocalDate reservationDate) {
         Space space = spaceService.create(team, reservationDate);
         List<Seat> seats = seatService.createAllByGridMap(team.getGridMap(), space);
         space.addSeats(seats);
