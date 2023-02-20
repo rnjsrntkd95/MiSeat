@@ -1,0 +1,55 @@
+@import '@styles/mixins.scss';
+
+.wrap{
+  border: 1px solid $C_Gray20;
+}
+
+.headerWrap{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .leftArrow{
+    margin-right: 20px;
+    cursor: pointer;
+  }
+
+  .headerTitle{
+    font-weight: 600;
+    margin-right: 20px;
+  }
+
+  .rightArrow{
+    cursor: pointer;
+  }
+}
+
+.weekWrap{
+  display: flex;
+  justify-content: center;
+
+  .dayWrap{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+
+    .title{
+      font-weight: 600;
+
+      &.weekend{
+        color: red;
+      }
+    }
+
+    .date{
+      padding-top: 10px;
+      cursor: pointer;
+
+      &.weekend{
+        opacity: 0.5;
+        cursor: default;
+      }
+    }
+  }
+}
