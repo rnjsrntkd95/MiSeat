@@ -43,12 +43,18 @@
     }
 
     .date{
-      padding-top: 10px;
+      padding: 5px;
+      margin-top: 10px;
       cursor: pointer;
 
       &.weekend{
         opacity: 0.5;
         cursor: default;
+      }
+
+      &.select{
+        background-color: $C_Gray20;
+        border-radius: 50%;
       }
     }
   }

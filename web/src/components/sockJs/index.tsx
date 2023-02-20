@@ -1,13 +1,22 @@
 'use client';
-import React, { useEffect, useState, useCallback, useRef } from 'react';
+import React, {
+  useEffect,
+  FC,
+  MutableRefObject,
+  Dispatch,
+  SetStateAction,
+} from 'react';
 import SockJS from 'sockjs-client';
 import * as StompJS from '@stomp/stompjs';
 
-const SocketJs = () => {
-  const client = useRef<StompJS.Client | null>(null);
+interface SocketJsProps {
+  client?: StompJS.Client;
+  setClient: (client: StompJS.Client | undefined) => void;
+}
 
+const SocketJs: FC<SocketJsProps> = ({ client, setClient }) => {
   const connect = () => {
-    client.current = new StompJS.Client({
+    const newClient = new StompJS.Client({
       // brokerURL: 'ws://10.111.3.121:8080/ws-miseat/ws',
       webSocketFactory: () => new SockJS(`${process.env.DOMAIN}`),
       connectHeaders: {
@@ -29,25 +38,27 @@ const SocketJs = () => {
       },
     });
 
-    client.current.activate();
+    newClient.activate();
+    setClient(newClient);
   };
 
   const disconnect = () => {
-    client.current?.deactivate();
+    client?.deactivate();
+    setClient(undefined);
   };
 
   const subscribe = () => {
-    client.current?.subscribe(`/sub/3`, (msg: any) => {
+    client?.subscribe(`/sub/3`, (msg: any) => {
       console.log('받은 메세지', msg.body);
     });
   };
 
   const publish = () => {
-    if (!client.current?.connected) {
+    if (!client?.connected) {
       return;
     }
 
-    client.current?.publish({
+    client.publish({
       destination: '/pub/health',
       body: JSON.stringify({ message: 'hi' }),
     });

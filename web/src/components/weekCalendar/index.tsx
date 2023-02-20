@@ -1,19 +1,30 @@
 'use client';
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
+import { FC, MutableRefObject, useEffect, useState } from 'react';
 import { WeekData, WEEK_DATE } from '@constants/weekCalendar';
 import styles from '@components/weekCalendar/weekCalendar.module.scss';
 import classnames from 'classnames/bind';
+import * as StompJS from '@stomp/stompjs';
 const cx = classnames.bind(styles);
+const initDate = new Date();
 
-const DaysView = (weekData: WeekData[]) => {
+const DaysView = (
+  weekData: WeekData[],
+  selectDate: Date,
+  setSelectDate: (date: Date) => void
+) => {
   const dayEl = weekData.map((e) => {
     const isWeekend = ['토', '일'].includes(e.day);
+    const isSelect = e.date.valueOf() === selectDate.valueOf();
+    const onDaySelect = () => setSelectDate(e.date);
 
     return (
       <div key={e.day} className={styles.dayWrap}>
         <div className={cx('title', { weekend: isWeekend })}>{e.day}</div>
-        <div className={cx('date', { weekend: isWeekend })}>
+        <div
+          className={cx('date', { weekend: isWeekend }, { select: isSelect })}
+          onClick={onDaySelect}
+        >
           {e.date.getDate()}
         </div>
       </div>
@@ -23,8 +34,13 @@ const DaysView = (weekData: WeekData[]) => {
   return dayEl;
 };
 
-const WeekCalender = () => {
-  const [date, setDate] = useState<Date>(new Date());
+interface WeekCalenderProps {
+  client?: StompJS.Client;
+}
+
+const WeekCalender: FC<WeekCalenderProps> = ({ client }) => {
+  const [selectDate, setSelectDate] = useState<Date>(initDate);
+  const [date, setDate] = useState<Date>(initDate);
   const [week, setWeek] = useState<WeekData[]>([]);
   const headerTitle = `${date.getFullYear()}.${date.getMonth() + 1}`;
 
@@ -75,7 +91,9 @@ const WeekCalender = () => {
           onClick={clickRightArrow}
         />
       </div>
-      <div className={styles.weekWrap}>{DaysView(week)}</div>
+      <div className={styles.weekWrap}>
+        {DaysView(week, selectDate, setSelectDate)}
+      </div>
     </div>
   );
 };
