@@ -26,7 +26,6 @@ const SocketJs: FC<SocketJsProps> = ({ client, setClient }) => {
       debug: function (err) {
         console.log(err);
       },
-
       reconnectDelay: 5000, //자동 재 연결
       heartbeatIncoming: 4000,
       heartbeatOutgoing: 4000,

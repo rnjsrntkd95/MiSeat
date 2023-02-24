@@ -1,6 +1,7 @@
 @import '@styles/mixins.scss';
 
 .header {
+  // position: relative;
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -15,4 +16,5 @@
   align-items: center;
   font-size: $Fw_Md;
   font-weight: $Fw_Md;
+  cursor: pointer;
 }
