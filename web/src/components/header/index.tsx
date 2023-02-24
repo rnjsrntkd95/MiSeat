@@ -1,22 +1,30 @@
+'use client';
 import Image from 'next/image';
 import Link from 'next/link';
 import styles from '@components/header/header.module.scss';
+import { useState } from 'react';
+import LoginModal from '@components/loginModal';
 
 const Header = () => {
+  const [visibleLoginModal, setVisibleLoginModal] = useState(false);
+  const onClick = () => setVisibleLoginModal(true);
+  const onClose = () => setVisibleLoginModal(false);
+
   return (
     <header className={styles.header}>
-      <Link href="/">
+      <Link href='/'>
         <Image
-          src="/img/header/logo.svg"
-          alt="13"
+          src='/img/header/logo.svg'
+          alt='13'
           width={40}
           height={40}
           priority
         />
       </Link>
-      <Link href="/login" className="">
+      <div className={styles.login} onClick={onClick}>
         Login
-      </Link>
+      </div>
+      {visibleLoginModal && <LoginModal onClose={onClose} />}
     </header>
   );
 };
