@@ -1,8 +1,4 @@
-'use client';
-
 import { MutableRefObject, useEffect, useRef } from 'react';
-
-type EventType = MouseEvent | TouchEvent;
 
 export default function useClickAway(
   onClickAway: () => void,

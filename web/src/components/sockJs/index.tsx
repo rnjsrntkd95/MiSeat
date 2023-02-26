@@ -1,13 +1,7 @@
-'use client';
-import React, {
-  useEffect,
-  FC,
-  MutableRefObject,
-  Dispatch,
-  SetStateAction,
-} from 'react';
+import React, { useEffect, FC } from 'react';
 import SockJS from 'sockjs-client';
 import * as StompJS from '@stomp/stompjs';
+import customAxios from '@utils/axios';
 
 interface SocketJsProps {
   client?: StompJS.Client;
@@ -18,10 +12,10 @@ const SocketJs: FC<SocketJsProps> = ({ client, setClient }) => {
   const connect = () => {
     const newClient = new StompJS.Client({
       // brokerURL: 'ws://10.111.3.121:8080/ws-miseat/ws',
-      webSocketFactory: () => new SockJS(`${process.env.DOMAIN}`),
+      webSocketFactory: () => new SockJS(`${process.env.DOMAIN}/ws-miseat`),
       connectHeaders: {
-        login: 'user',
-        password: 'password',
+        Authorization:
+          'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJNaVNlYXQgSXNzdWVyIiwidGVhbUNvZGUiOjc3Nzc3NywiZXhwIjoxNzc1OTU2NTY2LCJ1c2VySWQiOiJra3MxMDIzIiwiaWF0IjoxNjc1OTU2NTY2fQ.NV4llGQS22QFCCQLTpNOrnIXi0xvqTe_d-_x_3nejIo',
       },
       debug: function (err) {
         console.log(err);
@@ -65,14 +59,18 @@ const SocketJs: FC<SocketJsProps> = ({ client, setClient }) => {
 
   useEffect(() => {
     connect();
-
+    console.log(
+      customAxios.get('/space', {
+        params: { date: '2023-02-10' },
+      })
+    );
     return () => disconnect();
   }, []);
 
   return (
     <>
       <div>
-        <div id='menu'>
+        <div id="menu">
           <p>Welcome,</p>
         </div>
         <button onClick={() => publish()}>버어튼</button>
