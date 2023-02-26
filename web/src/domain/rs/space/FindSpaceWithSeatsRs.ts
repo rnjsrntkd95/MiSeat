@@ -1,7 +1,7 @@
 export default interface FindSpaceWithSeatsRs {
   teamCode: number;
   reservationDate: string;
-  seats: SeatDto;
+  seats: SeatDto[];
   ysize: number;
   xsize: number;
 }

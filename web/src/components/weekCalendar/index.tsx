@@ -1,11 +1,10 @@
 import Image from 'next/image';
-import { FC, MutableRefObject, useEffect, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { WeekData, WEEK_DATE } from '@constants/weekCalendar';
 import styles from '@components/weekCalendar/weekCalendar.module.scss';
 import classnames from 'classnames/bind';
 import * as StompJS from '@stomp/stompjs';
 const cx = classnames.bind(styles);
-const initDate = new Date();
 
 const DaysView = (
   weekData: WeekData[],
@@ -14,7 +13,7 @@ const DaysView = (
 ) => {
   const dayEl = weekData.map((e) => {
     const isWeekend = ['토', '일'].includes(e.day);
-    const isSelect = e.date.valueOf() === selectDate.valueOf();
+    const isSelect = e.date.valueOf() === selectDate?.valueOf();
     const onDaySelect = () => setSelectDate(e.date);
 
     return (
@@ -35,14 +34,18 @@ const DaysView = (
 
 interface WeekCalenderProps {
   client?: StompJS.Client;
+  selectDate: Date;
+  setSelectDate: (date: Date) => void;
 }
 
-const WeekCalender: FC<WeekCalenderProps> = ({ client }) => {
-  const [selectDate, setSelectDate] = useState<Date>(initDate);
-  const [date, setDate] = useState<Date>(initDate);
+const WeekCalender: FC<WeekCalenderProps> = ({
+  client,
+  selectDate,
+  setSelectDate,
+}) => {
+  const [date, setDate] = useState<Date>(selectDate);
   const [week, setWeek] = useState<WeekData[]>([]);
   const headerTitle = `${date.getFullYear()}.${date.getMonth() + 1}`;
-
   const makeWeek = (date: Date) => {
     let day = date.getDay();
 
