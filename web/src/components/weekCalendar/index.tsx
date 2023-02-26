@@ -1,4 +1,3 @@
-'use client';
 import Image from 'next/image';
 import { FC, MutableRefObject, useEffect, useState } from 'react';
 import { WeekData, WEEK_DATE } from '@constants/weekCalendar';
@@ -72,8 +71,8 @@ const WeekCalender: FC<WeekCalenderProps> = ({ client }) => {
     <div className={styles.wrap}>
       <div className={styles.headerWrap}>
         <Image
-          src='/img/weekCalendar/leftArrow.svg'
-          alt='Left Arrow'
+          src="/img/weekCalendar/leftArrow.svg"
+          alt="Left Arrow"
           className={styles.leftArrow}
           width={28}
           height={28}
@@ -82,8 +81,8 @@ const WeekCalender: FC<WeekCalenderProps> = ({ client }) => {
         />
         <div className={styles.headerTitle}>{headerTitle}</div>
         <Image
-          src='/img/weekCalendar/rightArrow.svg'
-          alt='Right Arrow'
+          src="/img/weekCalendar/rightArrow.svg"
+          alt="Right Arrow"
           className={styles.rightArrow}
           width={28}
           height={28}
