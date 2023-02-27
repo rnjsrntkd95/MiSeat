@@ -1,22 +1,22 @@
-import React, { useEffect, FC } from 'react';
+import React, { useEffect, FC, useState, useRef } from 'react';
 import SockJS from 'sockjs-client';
 import * as StompJS from '@stomp/stompjs';
-import customAxios from '@utils/axios';
+import { getheader } from '@utils/axios';
+import FindSpaceWithSeatsRs from '@domain/rs/space/FindSpaceWithSeatsRs';
 
 interface SocketJsProps {
-  client?: StompJS.Client;
-  setClient: (client: StompJS.Client | undefined) => void;
+  spaceData?: FindSpaceWithSeatsRs;
 }
 
-const SocketJs: FC<SocketJsProps> = ({ client, setClient }) => {
+const SocketJs: FC<SocketJsProps> = ({ spaceData }) => {
+  const [isClientConnect, setIsClientConnect] = useState(false);
+  const client = useRef<StompJS.Client | null>(null);
+
   const connect = () => {
-    const newClient = new StompJS.Client({
+    client.current = new StompJS.Client({
       // brokerURL: 'ws://10.111.3.121:8080/ws-miseat/ws',
       webSocketFactory: () => new SockJS(`${process.env.DOMAIN}/ws-miseat`),
-      connectHeaders: {
-        Authorization:
-          'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJNaVNlYXQgSXNzdWVyIiwidGVhbUNvZGUiOjc3Nzc3NywiZXhwIjoxNzc1OTU2NTY2LCJ1c2VySWQiOiJra3MxMDIzIiwiaWF0IjoxNjc1OTU2NTY2fQ.NV4llGQS22QFCCQLTpNOrnIXi0xvqTe_d-_x_3nejIo',
-      },
+      connectHeaders: getheader(),
       debug: function (err) {
         console.log(err);
       },
@@ -24,59 +24,76 @@ const SocketJs: FC<SocketJsProps> = ({ client, setClient }) => {
       heartbeatIncoming: 4000,
       heartbeatOutgoing: 4000,
       onConnect: () => {
-        subscribe();
+        setIsClientConnect(true);
       },
       onStompError: (frame) => {
         console.error(frame);
       },
     });
 
-    newClient.activate();
-    setClient(newClient);
+    client.current?.activate();
   };
 
   const disconnect = () => {
-    client?.deactivate();
-    setClient(undefined);
-  };
-
-  const subscribe = () => {
-    client?.subscribe(`/sub/3`, (msg: any) => {
-      console.log('받은 메세지', msg.body);
-    });
+    client.current?.deactivate();
   };
 
   const publish = () => {
-    if (!client?.connected) {
+    if (!client.current?.connected) {
       return;
     }
 
-    client.publish({
-      destination: '/pub/health',
-      body: JSON.stringify({ message: 'hi' }),
+    client.current?.publish({
+      destination: '/pub/reservation',
+      body: JSON.stringify({
+        reservations: [
+          {
+            date: '2023-02-10', // 현재 날짜로 변경
+            seatNumber: 1,
+          },
+        ],
+      }),
+      headers: getheader(),
     });
+  };
+
+  //실시간 팀좌석예약 결과 수신
+  const subTeamReservationRs = (spaceData?: FindSpaceWithSeatsRs) => {
+    if (spaceData && isClientConnect) {
+      client.current?.subscribe(
+        `/sub/team/${spaceData?.teamCode}`,
+        (rs: any) => {
+          console.log(rs);
+        },
+        getheader()
+      );
+    }
+  };
+
+  //좌석 예약 신청 결과 수신
+  const subSeatReservationRs = () => {
+    if (isClientConnect) {
+      client.current?.subscribe(
+        `/worker/reservation/result`,
+        (rs: any) => {
+          console.log(rs);
+        },
+        getheader()
+      );
+    }
   };
 
   useEffect(() => {
     connect();
-    console.log(
-      customAxios.get('/space', {
-        params: { date: '2023-02-10' },
-      })
-    );
     return () => disconnect();
   }, []);
 
-  return (
-    <>
-      <div>
-        <div id="menu">
-          <p>Welcome,</p>
-        </div>
-        <button onClick={() => publish()}>버어튼</button>
-      </div>
-    </>
-  );
+  useEffect(() => {
+    subTeamReservationRs(spaceData);
+    subSeatReservationRs();
+  }, [spaceData, isClientConnect]);
+
+  return <button onClick={publish}>버튼</button>;
 };
 
 export default SocketJs;
