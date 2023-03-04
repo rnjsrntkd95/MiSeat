@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -18,5 +20,9 @@ public class TeamFindService {
         return teamRepository
                 .findFirstByTeamCode(teamCode)
                 .orElseThrow(NotFoundTeamException::new);
+    }
+
+    public List<Team> getTeams() {
+        return teamRepository.findAll();
     }
 }

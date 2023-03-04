@@ -6,6 +6,7 @@ import com.miseat.global.path.ApiPath;
 import com.miseat.global.security.jwt.WorkerContext;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,7 +23,9 @@ public class SpaceInfoController {
     @Operation(description = "스페이스 예약 정보 조회")
     @GetMapping(ApiPath.SPACE)
     public FindSpaceWithSeatsRs findSpaceWithSeats(@AuthenticationPrincipal WorkerContext context,
-                                                   @RequestParam LocalDate reservationDate) {
+                                                   @RequestParam("date")
+                                                   @DateTimeFormat(pattern = "yyyy-MM-dd")
+                                                   LocalDate reservationDate) {
         return spaceInfoService.findSpaceWithSeats(context.getTeamCode(), reservationDate);
     }
 }

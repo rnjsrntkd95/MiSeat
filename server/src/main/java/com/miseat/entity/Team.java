@@ -11,6 +11,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.DayOfWeek;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,9 +31,17 @@ public class Team extends BaseDateTimeEntity {
     @OneToOne(mappedBy = "team")
     private GridMap gridMap;
 
+    private Integer reservationWeekTerm = 1;
+
+    private DayOfWeek reservationDayOfWeek = DayOfWeek.FRIDAY;
+
     @OneToMany(mappedBy = "team")
     private List<Space> spaces = new ArrayList<>();
 
     @OneToMany(mappedBy = "team")
     private List<Worker> workers = new ArrayList<>();
+
+    public Integer getReservationTerm() {
+        return this.reservationWeekTerm * 7;
+    }
 }
